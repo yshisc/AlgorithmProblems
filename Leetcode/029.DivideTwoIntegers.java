@@ -3,7 +3,8 @@ package Leetcode;
  *
  * @author xiangfeidong
  *
- *
+ * Try to find greatest n that dividend >= divisor*(2^n), add n to result, and dividend -= 2^n
+ * Keep trying while dividend >= divisor.
  * Example: 15 / 3.
  * Try: (1) 15 >= 3
  *          15 >= 6   (3<<1)
