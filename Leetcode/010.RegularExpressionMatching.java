@@ -38,7 +38,7 @@ public class RegularExpressionMatching {
     public boolean isMatch2(String s, String p) {
         boolean[][] match = new boolean[s.length() + 1][p.length() + 1];
 
-        //Init: match[0][0]
+        //Init: match[0][0]=true
         //Init: match[k][0]=false, for all k>=1.
         //Init: match[0][2k-1]=false, for all k>=1.
         //Init: match[0][2k]=true iff f[0][2k-2] && p[2k-1]='*', for all k>=1.
