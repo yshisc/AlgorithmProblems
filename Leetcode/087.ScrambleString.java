@@ -135,4 +135,48 @@ public class ScrambleString {
         memory[start1][start2][len] = 0;
         return false;
     }
+
+    /**
+     * Solutoin 4: DP
+     *
+     * State: f[i][j][k] denotes whether s1.substring(i,i+len) and s2.substring(j,j+len) are scramble
+     * Function: if there exists a k in [1,len-1] s.t.
+     *              f[i][j][k] && f[i + k][j + k][len - k] || f[i][j + len - k][k] && f[i + k][j][len - k]
+     *           then f[i][j][len] = true.
+     * Initialize: f[i][j][1]=true iff s1[i]==s2[j]
+     * Answer: f[0][0][n]
+     */
+    public boolean isScramble4(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+
+        int n = s1.length();
+        if (n == 0) {
+            return true;
+        }
+
+        boolean[][][] isScramble = new boolean[n][n][n + 1];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                isScramble[i][j][1] = s1.charAt(i) == s2.charAt(j);
+            }
+        }
+
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i + len <= n; i++) {
+                for (int j = 0; j + len <= n; j++) {
+                    for (int k = 1; k < len; k++) {
+                        if (isScramble[i][j][k] && isScramble[i + k][j + k][len - k]
+                                || isScramble[i][j + len - k][k] && isScramble[i + k][j][len - k]) {
+                            isScramble[i][j][len] = true;
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+
+        return isScramble[0][0][s1.length()];
+    }
 }

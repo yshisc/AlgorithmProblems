@@ -3,26 +3,32 @@ package Leetcode;
  * @author xiangfeidong
  *
  * 83.Remove Duplicates from Sorted List
+ *
+ * Two pointers:
+ *      pre -> first node of currently processed value
+ *      cur -> last node of currently processed value
+ * if pre = cur, there is no duplicate, jsut forward pre.
+ * else there exists duplicates, let pre.next=cur.next to remove duplicated nodes, foward pre.
  */
 public class RemoveDuplicatesFromSortedList {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null || head.next == null) {
+        if (head == null) {
             return head;
         }
 
-        //i points to first node with value that we are processing.
-        //j goes to next to find first node without current value.
-        ListNode i = head, j = head.next;
-        while (j != null) {
-            if (j.val == i.val) {
-                j = j.next;
+        ListNode pre = head, cur = head;
+        while (cur != null && cur.next != null) {
+            while (cur.next != null && cur.val == cur.next.val) {
+                cur = cur.next;
+            }
+            if (pre == cur) {
+                pre = pre.next;
+                cur = pre;
             } else {
-                i.next = j;
-                i = i.next;
-                j = j.next;
+                pre.next = cur.next;
+                cur = pre;
             }
         }
-        i.next = null;
 
         return head;
     }
