@@ -50,6 +50,39 @@ public class BinaryTreeInorderTraversal {
 
         return res;
     }
+
+    //Solution 3: Morris Algo.
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res  = new ArrayList<>();
+
+        TreeNode cur = root;
+        while (cur != null) {
+            //Left is null then add current node to path and go to right.
+            if (cur.left == null) {
+                res.add(cur.val);
+                cur = cur.right;
+            } else {
+                //Find the predecessor.
+                TreeNode pre = cur.left;
+                //To find the predecessor keep going right until right node is cur or null.
+                while (pre.right != cur && pre.right != null) {
+                    pre = pre.right;
+                }
+                if (pre.right == null) {
+                    //If right node is null then go left before establishing link from pre to cur.
+                    pre.right = cur;
+                    cur = cur.left;
+                } else {
+                    //Left is already visited. Go right after visiting cur.
+                    pre.right = null;
+                    res.add(cur.val);
+                    cur = cur.right;
+                }
+            }
+        }
+
+        return res;
+    }
 }
 
 class TreeNode {
