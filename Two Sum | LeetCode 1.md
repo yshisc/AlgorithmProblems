@@ -3,6 +3,7 @@ title: Two Sum | LeetCode 1
 date: 2016-09-07 08:40:12
 tags: [Array, Hash Table]
 categories: 算法题
+description: Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 ---
 # Question
 
