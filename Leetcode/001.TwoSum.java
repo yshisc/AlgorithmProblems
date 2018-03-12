@@ -10,20 +10,15 @@ import java.util.Map;
  */
 public class TwoSum {
     public int[] twoSum(int[] nums, int target) {
-        int[] res = new int[2];
-
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(nums[0], 0);
-
-        for (int i = 1; i < nums.length; i++) {
-            if (map.containsKey(target - nums[i])) {
-                res[0] = map.get(target - nums[i]);
-                res[1] = i;
-                break;
+        final Map<Integer, Integer> numberIndices = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (numberIndices.containsKey(target - nums[i])) {
+                return new int[]{numberIndices.get(target - nums[i]), i};
             }
-            map.put(nums[i], i);
+            
+            numberIndices.put(nums[i], i);
         }
-
-        return res;
+        
+        return new int[]{-1, -1};
     }
 }
