@@ -7,38 +7,30 @@ package Leetcode;
  */
 public class AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        //Create a dummy head and a pointer of result list.
-        ListNode dummy = new ListNode(0);
-        ListNode pre = dummy;
-
-        int carry = 0;
-
-        //Keep a pointer for each list.
-        ListNode node1 = l1, node2 = l2;
-
-        while (node1 != null || node2 != null) {
-            //Calculate sum of current digit.
-            int sum = carry;
-            if (node1 != null) {
-                sum += node1.val;
-                node1 = node1.next;
+        final ListNode root = new ListNode(0);
+        ListNode node = root;
+        
+        int sum = 0;
+        while (l1 != null || l2 != null) {
+            sum /= 10;
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
             }
-            if (node2 != null) {
-                sum += node2.val;
-                node2 = node2.next;
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
             }
-
-            pre.next = new ListNode(sum % 10);
-            pre = pre.next;
-            carry = sum / 10;
+            
+            node.next = new ListNode(sum % 10);
+            node = node.next;
         }
-
-        //Maybe we need an additional digit
-        if (carry != 0) {
-            pre.next = new ListNode(carry);
+        
+        if (sum >= 10) {
+            node.next = new ListNode(1);
         }
-
-        return dummy.next;
+        
+        return root.next;
     }
 }
 
