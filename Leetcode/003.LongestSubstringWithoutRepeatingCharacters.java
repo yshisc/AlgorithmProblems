@@ -19,8 +19,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
             char c = s.charAt(j);
             //Remove duplicate characters.
             while (set.contains(c)) {
-                set.remove(s.charAt(i));
-                i++;
+                set.remove(s.charAt(i++));
             }
             //Add current character to set.
             set.add(c);
