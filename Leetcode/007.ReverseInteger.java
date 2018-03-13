@@ -4,35 +4,22 @@ package Leetcode;
  *
  * 7.Reverse Integer
  *
- * (1)while num!=0 {res = res * 10 + num % 10; num /= 10;}
- * (2)what if num=0? Directly return 0
- * (3)what if num<0? boolean flag; num=-num
- * (4)what if overflow? use long type
+ * Things to consider:
+ *  - overflow
+ *  - environment can only hold integers within the 32-bit signed integer range
+ *  - input = 0
  */
 public class ReverseInteger {
-    public static int reverse(int x) {
-        if (x == 0) {
-            return x;
+     public int reverse(int x) {
+        int res = 0;
+        while (x != 0) {
+            int newRes = res * 10 + x % 10;
+            if ((newRes - x % 10) / 10 != res) {
+                return 0;
+            }
+            res = newRes;
+            x /= 10;
         }
-
-        long num = x;
-
-        boolean negative = false;
-        if (num < 0) {
-            negative = true;
-            num = -num;
-        }
-
-        long res = 0;
-        while (num != 0) {
-            res = res * 10 + num % 10;
-            num /= 10;
-        }
-
-        res = negative ? -res : res;
-        if (res >= Integer.MIN_VALUE && res <= Integer.MAX_VALUE) {
-            return (int) res;
-        }
-        return 0;
+        return res;
     }
 }
