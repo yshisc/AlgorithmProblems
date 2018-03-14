@@ -6,19 +6,17 @@ package Leetcode;
  */
 public class PalindromeNumber {
     public boolean isPalindrome(int x) {
-        //x is negative OR ended with 0.
+        // Think about cases like 110. The 0 will be ignore when reversing the number, so generate uncertainty.
         if (x < 0 || x != 0 && x % 10 == 0) {
             return false;
         }
 
-        //Reverse right half.
         int reverse = 0;
-        while (x > reverse) {
+        while (reverse < x) {
             reverse = reverse * 10 + x % 10;
             x /= 10;
         }
-
-        //Digit number may be even or odd.
-        return x == reverse || x == reverse / 10;
+        
+        return reverse == x || reverse / 10 == x;
     }
 }
