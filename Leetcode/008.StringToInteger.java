@@ -2,45 +2,50 @@ package Leetcode;
 /**
  * @author xiangfeidong
  *
- * 8.String to Integer (atoi): since maybe there are spaces at head and non-digits at tail, we cannot directly parse it.
+ * 8.String to Integer (atoi)
+ *
+ * Things to clarify:
+ *  - Invalid string? -> return 0
+ *  - Have space? -> ingore leading spaces
+ *  - Illegal character? -> ingore trailing part
  */
 public class StringToInteger {
-    public int myAtoi(String str) {
-        //String is empty.
+    public int myAtoi(String str) { 
+        // String is invalid.
         if (str == null || str.length() == 0) {
             return 0;
         }
-
-        //Remove spaces.
+        
+        // Remove leading space.
         int i = 0;
         while (i < str.length() && str.charAt(i) == ' ') {
             i++;
         }
-
-        //Handle sign.
-        int sign = 1;
-        if (str.charAt(i) == '+' || str.charAt(i) == '-') {
-            sign = str.charAt(i) == '+' ? 1 : -1;
+        
+        // Determine sign.
+        boolean positive = true;
+        if (str.charAt(i) == '+') {
+            i++;
+        } else if (str.charAt(i) == '-') {
+            positive = false;
             i++;
         }
-
-        //Convert to number.
+        
+        // Convert number.
         int res = 0;
         while (i < str.length()) {
-            int digit = str.charAt(i) - '0';
-            //Current character is not a digit.
+            final int digit = str.charAt(i) - '0';
+            // Ignore trailing part after illegal character.
             if (digit < 0 || digit > 9) {
                 break;
             }
-            //Number will overflow after it multiple 10 and add current digit.
             if (res > Integer.MAX_VALUE / 10 || res == Integer.MAX_VALUE / 10 && digit > Integer.MAX_VALUE % 10) {
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+                return positive ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
-
             res = res * 10 + digit;
             i++;
         }
-
-        return res * sign;
+        
+        return res * (positive ? 1 : -1);
     }
 }
