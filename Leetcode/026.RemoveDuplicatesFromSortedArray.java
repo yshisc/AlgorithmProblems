@@ -7,8 +7,6 @@ package Leetcode;
  * Keep two pointers:
  * (1)p1 points to first place of numbers with same value
  * (2)p2 moves to find first number that is not equal to p1's number
- * Increment p1, and assign p2's number to p1's position, increment p2.
- * Finally p1 is the last position of new array.
  */
 public class RemoveDuplicatesFromSortedArray {
     public int removeDuplicates(int[] nums) {
