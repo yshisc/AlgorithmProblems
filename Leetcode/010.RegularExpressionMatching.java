@@ -6,7 +6,7 @@ package Leetcode;
  */
 public class RegularExpressionMatching {
     /**
-     * Solution 1: Recursion. Key point is '*'.
+     * Solution 1: Recursion. Key point is if the second char of pattern is '*'.
      */
     public boolean isMatch1(String s, String p) {
         if (p.isEmpty()) {
