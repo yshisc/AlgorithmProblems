@@ -8,45 +8,38 @@ package Leetcode;
  */
 public class No034SearchForARange {
     public int[] searchRange(int[] nums, int target) {
-        int[] res = {-1, -1};
+        if (nums == null || nums.length == 0) {
+            return new int[]{-1, -1};
+        }
 
-        //Look for first index of target.
+        return new int[]{findFirstOrLast(nums, target, true), findFirstOrLast(nums, target, false)};
+    }
+
+    private int findFirstOrLast(int[] nums, int target, boolean first) {
         int start = 0, end = nums.length - 1;
-        while (start < end) {
-            int mid = start + (end - start) / 2;
-            if (nums[mid] >= target) {
-                end = mid;
-            } else {
-                start = mid + 1;
-            }
-        }
-        if (nums[start] == target) {
-            res[0] = start;
-        } else {
-            //target is not in array.
-            return res;
-        }
-
-        //Look for last index of target.
-        start = 0;
-        end = nums.length - 1;
-        //Set "start+1<end" other than "start<end" as loop condition.
-        //Because we let "start = mid" in loop, start will never be equal to end.
         while (start + 1 < end) {
             int mid = start + (end - start) / 2;
-            if (nums[mid] <= target) {
+            if (nums[mid] == target) {
+                if (first) {
+                    end = mid;
+                } else {
+                    start = mid;
+                }
+            } else if (nums[mid] < target) {
                 start = mid;
             } else {
-                end = mid - 1;
+                end = mid;
             }
         }
-        //Must first check end, because we are looking for last index.
-        if (nums[end] == target) {
-            res[1] = end;
-        } else {
-            res[1] = start;
-        }
 
-        return res;
+        if (nums[start] == target && nums[end] == target) {
+            return first ? start : end;
+        } else if (nums[start] == target) {
+            return start;
+        } else if (nums[end] == target) {
+            return end;
+        } else {
+            return -1;
+        }
     }
 }
