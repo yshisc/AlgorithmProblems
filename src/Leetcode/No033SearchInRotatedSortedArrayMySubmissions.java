@@ -15,7 +15,6 @@ package Leetcode;
  *                   | o              o
  *     The mid can be in (left) or (right) of rotating line.
  *     Deal with 2 cases separately.
- *     Left can be represented by (num[mid] >= num[start]), which can still be used.
  */
 public class No033SearchInRotatedSortedArrayMySubmissions {
     public int search(int[] nums, int target) {
