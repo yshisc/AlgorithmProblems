@@ -17,7 +17,7 @@ public class No034SearchForARange {
 
     private int findFirstOrLast(int[] nums, int target, boolean first) {
         int start = 0, end = nums.length - 1;
-        while (start + 1 < end) {
+        while (start + 1 < end) {    // The condition cannot be `start < end` because of `start = mid` assignment, otherwise infinite loop may happen.
             int mid = start + (end - start) / 2;
             if (nums[mid] == target) {
                 if (first) {
