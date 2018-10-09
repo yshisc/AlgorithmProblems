@@ -3,45 +3,29 @@ package Leetcode;
  *
  * @author xiangfeidong
  *
- * Try to find greatest n that dividend >= divisor*(2^n), add n to result, and dividend -= 2^n
- * Keep trying while dividend >= divisor.
- * Example: 15 / 3.
- * Try: (1) 15 >= 3
- *          15 >= 6   (3<<1)
- *          15 >= 12  (3<<2)      res += 4  (1<<2)
- *      (2) (15 - 12 = 3)
- *          3 >= 3                res += 1
- *      (3) (3 - 3 = 0)
- * res = 5
+ * Brute force is constantly minus divisor from dividend until dividend < divisor.
+ * We can minus divisor, then divisor * 2, ..., until the number > dividend. And repeat the process until dividend < divisor.
+ * Since we increase the number exponentially, the time is O(log dividend).
  */
 public class No029DivideTwoIntegers {
-    public int divide(int dividend, int divisor) {
-        if (divisor == 0 || dividend == Integer.MIN_VALUE && divisor == -1) {
+    public int divide(final int dividend, final int divisor) {
+        long dvd = Math.abs((long) dividend);
+        long dvs = Math.abs((long) divisor);
+
+        long rst = 0;
+        while (dvd >= dvs) {
+            for (long tmp = dvs, cnt = 1; tmp <= dvd; tmp <<= 1, cnt <<= 1) {
+                dvd -= tmp;
+                rst += cnt;
+            }
+        }
+
+        if (dividend < 0 ^ divisor < 0) {
+            rst *= -1;
+        }
+        if (rst < Integer.MIN_VALUE || rst > Integer.MAX_VALUE) {
             return Integer.MAX_VALUE;
         }
-
-        //Convert input to long type.
-        long dvd = dividend;
-        long dvs = divisor;
-        boolean negative = (dvd < 0) ^ (dvs < 0) ? true : false;
-
-        //Must take place after converting to long, in case that dividend=MIN_INT.
-        dvd = Math.abs(dvd);
-        dvs = Math.abs(dvs);
-
-        int res = 0;
-        while (dvd >= dvs) {
-            long temp = dvs;
-            int multiplier = 1;
-            while (dvd >= (temp << 1)) {
-                temp <<= 1;
-                multiplier <<= 1;
-            }
-
-            dvd -= temp;
-            res += multiplier;
-        }
-
-        return negative ? -res : res;
+        return (int) rst;
     }
 }
