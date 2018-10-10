@@ -6,31 +6,9 @@ package Leetcode;
  */
 public class No074SearchA2DMatrix {
     /**
-     * Search from top right. Each time if the value is not target, discard a row or a column.
+     * Flatten 2D matrix and do binary search. O(log(m*n)).
      */
     public boolean searchMatrix1(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
-            return false;
-        }
-
-        int i = 0, j = matrix[0].length - 1;
-        while (i < matrix.length && j >= 0) {
-            if (matrix[i][j] == target) {
-                return true;
-            } else if (matrix[i][j] < target) {
-                i++;
-            } else {
-                j--;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Flatten 2D matrix and do binary search.
-     */
-    public boolean searchMatrix2(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
             return false;
         }
@@ -49,5 +27,27 @@ public class No074SearchA2DMatrix {
         }
 
         return matrix[start / matrix[0].length][start % matrix[0].length] == target;
+    }
+
+    /**
+     * Search from top right. Each time if the value is not target, discard a row or a column. O(m+n).
+     */
+    public boolean searchMatrix2(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
+            return false;
+        }
+
+        int i = 0, j = matrix[0].length - 1;
+        while (i < matrix.length && j >= 0) {
+            if (matrix[i][j] == target) {
+                return true;
+            } else if (matrix[i][j] < target) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+
+        return false;
     }
 }
